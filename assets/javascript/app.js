@@ -38,28 +38,17 @@ const questions = {
     }
     }
 
-
-console.log(questions.firstQuestion.q1);
-console.log(questions.firstQuestion.a2);
-
-const answers = {
-    a1: "",
-    a2: "",
-    a3: "",
-    a4: "",
-    a5: "",
-    a6: "",
-
-}
-
 const gifs = {
-    g1: "url",
+    g1: "https://media1.tenor.com/images/2511f398488c7c4a7618848d2e97afdc/tenor.gif?itemid=5436852",
     g2: "url",
     g3: "url",
     g4: "url",
     g5: "url",
     g6: "url",
 }
+
+const jeep = $("#jeep");
+jeep.attr("src", "assets/images/jeep.gif");
 
 //variables to store data
 let correctScore = 0;
