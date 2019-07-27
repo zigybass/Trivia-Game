@@ -2,6 +2,9 @@
 
 /*
 
+THEME: Atlanta, cars, cities, movies.
+
+
 - Create a trivia game. 
 - Each question has it's own page and timer
 - When user clicks start, trivia starts with first question
@@ -24,3 +27,4 @@
 - If user clicks restart, jump to first question.
 - 
 
+*/
