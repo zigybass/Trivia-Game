@@ -47,39 +47,47 @@ const gifs = {
     g6: "url",
 }
 
-// NOT WORKING: src wont change to designated path.
 // const jeep = $("#jeep");
-$("#jeep").attr("src", "assets/images/jeep.gif")
+// $("#jeep").attr("src", "assets/images/jeep.gif")
 
 //variables to store data
 let correctScore = 0;
 let wrongScore = 0;
 let unansweredScore = 0;
 let count = 30;
-let didUserSelect = true;
+let didUserSelect = false;
 // dynamic questions/answers here
 let gifURL;
-let question;
+// let question;
 let userGuess;
 let correctAnswer;
 
 function stopTime () {
-    didUserSelect = false;
+    didUserSelect = true;
 }
 
 function countDown () {
-    if (didUserSelect) {
     setInterval(function () {
         count--;
         $("#time").text("Time remaining: " + count);
     }, 1000);
-} else {
-    stopTime();
-}};
+}
 
+function newQuestion() {
+    didUserSelect = false;
+    $("#question").text(questions.firstQuestion.q1);
+    $("#answerA").text(questions.firstQuestion.a1);
+    $("#answerB").text(questions.firstQuestion.a2);
+    $("#answerC").text(questions.firstQuestion.a3);
+    $("#answerD").text(questions.firstQuestion.a4);
+};
+
+// Starts game
 $("#initializer").on("click", function () {
     $("#initializer").css("display", "none");
+    didUserSelect = false;
     countDown();
+    newQuestion();
 
 })
 
