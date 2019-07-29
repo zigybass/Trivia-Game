@@ -1,4 +1,4 @@
-
+$(document).ready(function(){
 // best way to access Q/A?
 const questions = {
     firstQuestion: {
@@ -47,18 +47,40 @@ const gifs = {
     g6: "url",
 }
 
-const jeep = $("#jeep");
-jeep.attr("src", "assets/images/jeep.gif");
+// NOT WORKING: src wont change to designated path.
+// const jeep = $("#jeep");
+$("#jeep").attr("src", "assets/images/jeep.gif")
 
 //variables to store data
 let correctScore = 0;
 let wrongScore = 0;
 let unansweredScore = 0;
-let timer;
-// let count;
-let didUserSelect = false;
+let count = 30;
+let didUserSelect = true;
 // dynamic questions/answers here
-let gif;
+let gifURL;
 let question;
 let userGuess;
 let correctAnswer;
+
+function stopTime () {
+    didUserSelect = false;
+}
+
+function countDown () {
+    if (didUserSelect) {
+    setInterval(function () {
+        count--;
+        $("#time").text("Time remaining: " + count);
+    }, 1000);
+} else {
+    stopTime();
+}};
+
+$("#initializer").on("click", function () {
+    $("#initializer").css("display", "none");
+    countDown();
+
+})
+
+})

@@ -1,4 +1,4 @@
-// Pseudo Code
+ // Pseudo Code
 
 /*
 
@@ -6,7 +6,7 @@ THEME: Atlanta, cars, cities, movies.
 
 
 - Create a trivia game. 
-- Each question has it's own page and timer
+- Each question has it's own page and timer (or a function clears and reloads page with next data)
 - When user clicks start, trivia starts with first question
 - For each trivia question, there are 3 wrong answers and 1 right answer.
 - As user hovers over an answer, then answer is highlighted.
