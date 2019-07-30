@@ -65,14 +65,21 @@ $(document).ready(function () {
 
     let timer;
 
-
     function startTimer () {
         timer = setInterval(function () {
             count--;
             $("#time").text("Time remaining: " + count);
-            if (count === 0) {
+        }, 1000);
+    }
+
+    function gifTimer () {
+        timer = setInterval(function () {
+            count--;
+            console.log(count)
+            if (count == 0) {
                 stopTime();
-                clearPage();
+                questionCount++;
+                newQuestion();
             }
         }, 1000);
     }
@@ -85,6 +92,7 @@ $(document).ready(function () {
 
     function newQuestion () {
         x = questionCount;
+        startTimer();
         $("#question").text(questions[x].q);
         $("#answerA").text(questions[x].a);
         $("#answerB").text(questions[x].b);
@@ -92,18 +100,22 @@ $(document).ready(function () {
         $("#answerD").text(questions[x].d);
     };
 
-    function clearPage () {
+
+    function transition () {
         $(".selections").empty();
+        $("#time").text("");
+        $("#pic").attr("src", "assets/images/lancia.gif");
+        count = 4;
+        gifTimer();
     }
 
+
     $("#answerB").on("click", function () {
-        clearPage();
         stopTime();
+        transition();
         correctScore++;
-        console.log(correctScore);
-        $("#pic").attr("src", "assets/images/lancia.gif");
         $("#question").text("You guessed right!");
-    })
+    });
 
     /*
     $("#answerB").on("click", function () {
@@ -133,7 +145,6 @@ $(document).ready(function () {
     $("#initializer").on("click", function () {
         $("#initializer").css("display", "none");
         $("#pic").attr({"src": "", "alt": ""});
-        startTimer();
         newQuestion();
     })
 
