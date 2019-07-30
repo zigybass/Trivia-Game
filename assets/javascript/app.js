@@ -1,94 +1,140 @@
-$(document).ready(function(){
-// best way to access Q/A?
-const questions = {
-    firstQuestion: {
-        q1: "Which car company has a performance race track in Atlanta?",
-        a1: "Mercedes",
-        a2: "Porsche",
-        a3: "Lexus",
-        a4: "Ford",
-    },
-    secondQuestion: {
-        q2: "Who was Ford aiming to beat in the 1966 Le Mans 24 Hour race?",
-        a1: "Lotus",
-        a2: "Alpine",
-        a3: "Ferrari",
-        a4: "Porsche",
-    },
-    thirdQuestion: {
-        q3: "Which of these companies does VW Group own?",
-        a1: "Volvo",
-        a2: "Aston Martin",
-        a3: "BMW",
-        a4: "Lamborghini",
-    },
-    fourthQuestion: {
-        q4: "What is the name of the racing class that was established in 1982 and canceled in 1986 due to too many driver and spectator deaths?",
-        a1: "Deutsche Tourenwagen Meisterschaft",
-        a2: "Australian Touring Car Championship",
-        a3: "BTCC Series",
-        a4: "Group B",
-    },
-    fifthQuestion: {
-        q5: "What production car currently holds the fastest lap at the Nurburgring?",
-        a1: "Lamborghini Aventador SVJ",
-        a2: "Porsche 911 GT3 RS",
-        a3: "Dodge Viper ACR",
-        a4: "Porsche 911 GT2 RS",
+$(document).ready(function () {
+
+    // best way to access Q/A?
+    const questions = [
+        {
+            q: "Which car company has a performance race track in Atlanta?",
+            a: "Mercedes",
+            b: "Porsche",
+            c: "Lexus",
+            d: "Ford",
+        },
+        {
+            q: "Who was Ford aiming to beat in the 1966 Le Mans 24 Hour race?",
+            a: "Lotus",
+            b: "Alpine",
+            c: "Ferrari",
+            d: "Porsche",
+        },
+        {
+            q: "Which of these companies does VW Group own?",
+            a: "Volvo",
+            b: "Aston Martin",
+            c: "BMW",
+            d: "Lamborghini",
+        },
+        {
+            q: "What is the name of the racing class that was established in 1982 and canceled in 1986 due to too many driver and spectator deaths?",
+            a: "Deutsche Tourenwagen Meisterschaft",
+            b: "Australian Touring Car Championship",
+            c: "BTCC Series",
+            d: "Group B",
+        },
+        {
+            q: "What production car currently holds the fastest lap at the Nurburgring?",
+            a: "Lamborghini Aventador SVJ",
+            b: "Porsche 911 GT3 RS",
+            c: "Dodge Viper ACR",
+            d: "Porsche 911 GT2 RS",
+        }
+    ]
+
+    const gifs = [
+        "assets/images/bean.jpeg",
+        "assets/images/lancia.gif",
+        "assets/images/smartdrag.gif",
+        "assets/images/water.jpeg",
+        "assets/images/jeep.gif",
+        "url",
+    ]
+
+    // const jeep = $("#jeep");
+    // $("#jeep").attr("src", "assets/images/jeep.gif")
+
+    //variables to store data
+    let correctScore = 0;
+    let wrongScore = 0;
+    let unansweredScore = 0;
+    let count = 5;
+    // dynamic questions/answers here
+    let gifURL;
+    // let question;
+    let userGuess;
+    let correctAnswer;
+    let questionCount = 0;
+
+    let timer;
+
+
+    function startTimer () {
+        timer = setInterval(function () {
+            count--;
+            $("#time").text("Time remaining: " + count);
+            if (count === 0) {
+                stopTime();
+                clearPage();
+            }
+        }, 1000);
     }
+
+    function stopTime () {
+         clearInterval(timer);
+    };
+
+
+
+    function newQuestion () {
+        x = questionCount;
+        $("#question").text(questions[x].q);
+        $("#answerA").text(questions[x].a);
+        $("#answerB").text(questions[x].b);
+        $("#answerC").text(questions[x].c);
+        $("#answerD").text(questions[x].d);
+    };
+
+    function clearPage () {
+        $(".selections").empty();
     }
 
-const gifs = {
-    g1: "https://media1.tenor.com/images/2511f398488c7c4a7618848d2e97afdc/tenor.gif?itemid=5436852",
-    g2: "url",
-    g3: "url",
-    g4: "url",
-    g5: "url",
-    g6: "url",
-}
+    $("#answerB").on("click", function () {
+        clearPage();
+        stopTime();
+        correctScore++;
+        console.log(correctScore);
+        $("#pic").attr("src", "assets/images/lancia.gif");
+        $("#question").text("You guessed right!");
+    })
 
-// const jeep = $("#jeep");
-// $("#jeep").attr("src", "assets/images/jeep.gif")
-
-//variables to store data
-let correctScore = 0;
-let wrongScore = 0;
-let unansweredScore = 0;
-let count = 30;
-let didUserSelect = false;
-// dynamic questions/answers here
-let gifURL;
-// let question;
-let userGuess;
-let correctAnswer;
-
-function stopTime () {
-    didUserSelect = true;
-}
-
-function countDown () {
-    setInterval(function () {
-        count--;
-        $("#time").text("Time remaining: " + count);
-    }, 1000);
-}
-
-function newQuestion() {
-    didUserSelect = false;
-    $("#question").text(questions.firstQuestion.q1);
-    $("#answerA").text(questions.firstQuestion.a1);
-    $("#answerB").text(questions.firstQuestion.a2);
-    $("#answerC").text(questions.firstQuestion.a3);
-    $("#answerD").text(questions.firstQuestion.a4);
-};
-
-// Starts game
-$("#initializer").on("click", function () {
-    $("#initializer").css("display", "none");
-    didUserSelect = false;
-    countDown();
-    newQuestion();
-
-})
+    /*
+    $("#answerB").on("click", function () {
+        didUserSelect = true;
+        if ( didUserSelect ) {
+            $("#question").text("");
+            $("#answerA").text("");
+            $("#answerB").text("");
+            $("#answerC").text("");
+            $("#answerD").text("");
+            $("#919").css("src", gifs[0])
+        }
+    })
+    
+    // Loads transition page/gif
+    if ( didUserSelect ) {
+        $("#question").text("");
+        $("#answerA").text("");
+        $("#answerB").text("");
+        $("#answerC").text("");
+        $("#answerD").text("");
+        $("#919").css("src", gifs.g1)
+    }
+    
+    */
+    // Starts game
+    $("#initializer").on("click", function () {
+        $("#initializer").css("display", "none");
+        $("#pic").attr({"src": "", "alt": ""});
+        startTimer();
+        newQuestion();
+    })
 
 })

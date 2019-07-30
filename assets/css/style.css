@@ -7,4 +7,12 @@ body {
     background: rgb(53, 9, 23);
     color: rgba(255, 255, 255, 0.925);
     border-radius: 6%;
+    padding: 20px;
+}
+
+#answerA:hover, #answerB:hover, #answerC:hover, #answerD:hover {
+    background-color: rgb(194, 187, 99);
+    transition: background-color .5s;
+    display: inline-block;
+    cursor: pointer;
 }

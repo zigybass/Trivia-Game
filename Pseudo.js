@@ -4,6 +4,14 @@
 
 THEME: Atlanta, cars, cities, movies.
 
+TO DO
+- Build transition pages.
+- Listen for clicks on right/wrong answers. Record scores.
+- Reset timer for transition and question pages
+- Find more GIFs
+- Finish up project
+
+
 
 - Create a trivia game. 
 - Each question has it's own page and timer (or a function clears and reloads page with next data)
