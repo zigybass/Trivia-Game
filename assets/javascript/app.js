@@ -58,20 +58,21 @@ $(document).ready(function () {
         "assets/images/flip.gif",
         "assets/images/jeep.gif",
         "assets/images/bean.gif",
+        "assets/images/deer.gif",
     ]
 
     //variables to store data
     let correctScore = 0;
     let wrongScore = 0;
     let unansweredScore = 0;
-    let count = 20;
+    let count = 18;
     let questionCount = 0;
     let gifCount = 0;
 
     let timer;
 
     function startTimer () {
-        count = 4;
+        count = 18;
         timer = setInterval(function () {
             count--;
             $("#time").text("Time remaining: " + count);
@@ -89,15 +90,28 @@ $(document).ready(function () {
         count = 5;
         timer = setInterval(function () {
             count--;
-            if (count == 0) {
+            if ( count == 0 && questionCount == 5) {
+                stopTime();
+                $("#time").text("");
+                $("#question").text("Thanks for playing!");
+                setTimeout(function () {
+                correctScore = 0;
+                wrongScore = 0;
+                unansweredScore = 0;
+                gifCount = 0;
+                questionCount = 0;
+            }, 200)
+                $("#initializer").css("display", "initial");
+                $("#answerA").text(`Thanks for playing! Here's your total score:`);
+                $("#answerB").text(`Correct Answers: ${correctScore}`);
+                $("#answerC").text(`Incorrect Answers: ${wrongScore}`);
+                $("#answerD").text(`Unanswered: ${unansweredScore}`);
+            }
+            else if (count == 0) {
                 stopTime();
                 questionCount++;
                 newQuestion();
                 gifCount++;
-                console.log("Q: " + questionCount);
-                //console.log("Correct: " + correctScore);
-                //console.log("Wrong: " + wrongScore);
-                //console.log("Unanswered: " + unansweredScore);
             }
         }, 1000);
     }
@@ -109,6 +123,7 @@ $(document).ready(function () {
 
     function newQuestion () {
         x = questionCount;
+        $("#time").text("Time remaining: 18");
         startTimer();
         $("#pic").attr({"src": "", "alt": ""});
         $("#pic").css({"border-width": "0px"});
@@ -122,7 +137,7 @@ $(document).ready(function () {
 
     function transition () {
         x = gifCount;
-        if ( gifCount < 5) {
+        if ( gifCount < 6) {
          $("#answerA").text("");
          $("#answerB").text("");
          $("#answerC").text("");
@@ -132,20 +147,7 @@ $(document).ready(function () {
          $("#pic").css({"border-width": "2px"});
          gifTimer();
         } else {
-            $("#time").text("");
-            $("#pic").css({"border-width": "0px"});
-            setTimeout(function () {
-                correctScore = 0;
-                wrongScore = 0;
-                unansweredScore = 0;
-                gifCount = 0;
-                questionCount = 0;
-            }, 200)
-            $("#initializer").css("display", "initial");
-            $("#answerA").text(`Thanks for playing! Here's your total score:`);
-            $("#answerB").text(`Correct Answers: ${correctScore}`);
-            $("#answerC").text(`Incorrect Answers: ${wrongScore}`);
-            $("#answerD").text(`Unanswered: ${unansweredScore}`);
+            console.log("I should never get here or see this log");
         }
     }
 
@@ -215,8 +217,6 @@ $(document).ready(function () {
     // Starts game
     $("#initializer").on("click", function () {
         $("#initializer").css("display", "none");
-        //$("#pic").attr({"src": "", "alt": ""});
-        //$("#pic").css({"border-width": "0px"});
         newQuestion();
     })
 
