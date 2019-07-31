@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    // best way to access Q/A?
+    // Array of objects that hold questions and corresponding answers
     const questions = [
         {
             q: "Which car company has a performance race track in Atlanta?",
@@ -8,6 +8,7 @@ $(document).ready(function () {
             b: "Porsche",
             c: "Lexus",
             d: "Ford",
+            answer: "Correct answer is B: Porsche."
         },
         {
             q: "Who was Ford aiming to beat in the 1966 Le Mans 24 Hour race?",
@@ -15,6 +16,7 @@ $(document).ready(function () {
             b: "Alpine",
             c: "Ferrari",
             d: "Porsche",
+            answer: "Correct answer is C: Ferrari."
         },
         {
             q: "Which of these companies does VW Group own?",
@@ -22,6 +24,7 @@ $(document).ready(function () {
             b: "Aston Martin",
             c: "BMW",
             d: "Lamborghini",
+            answer: "Correct answer is D: Lamborghini."
         },
         {
             q: "What is the name of the racing class that was established in 1982 and canceled in 1986 due to too many driver and spectator deaths?",
@@ -29,6 +32,7 @@ $(document).ready(function () {
             b: "Australian Touring Car Championship",
             c: "BTCC Series",
             d: "Group B",
+            answer: "Correct answer is D: Group B."
         },
         {
             q: "What production car currently holds the fastest lap at the Nurburgring?",
@@ -36,16 +40,24 @@ $(document).ready(function () {
             b: "Porsche 911 GT3 RS",
             c: "Dodge Viper ACR",
             d: "Porsche 911 GT2 RS",
+            answer: "Correct answer is A: Lamborghini Aventador SVJ"
+        },
+        {
+            q: "Which car will be the only car that's under $60k and will get to 60MPH in less than 3 seconds?",
+            a: "Chevy Corvette",
+            b: "Ford Mustang",
+            c: "Dodge Charger",
+            d: "Ford Fiesta",
+            answer: "Correct answer is A: Chevy Corvette."
         }
     ]
-
+    // Source for GIFs
     const gifs = [
-        "assets/images/bean.jpeg",
         "assets/images/lancia.gif",
         "assets/images/smartdrag.gif",
-        "assets/images/water.jpeg",
+        "assets/images/water.gif",
         "assets/images/jeep.gif",
-        "url",
+        "assets/images/bean.gif",
     ]
 
     // const jeep = $("#jeep");
@@ -55,31 +67,40 @@ $(document).ready(function () {
     let correctScore = 0;
     let wrongScore = 0;
     let unansweredScore = 0;
-    let count = 5;
-    // dynamic questions/answers here
-    let gifURL;
-    // let question;
-    let userGuess;
-    let correctAnswer;
+    let count = 20;
     let questionCount = 0;
+    let gifCount = 0;
 
     let timer;
 
     function startTimer () {
+        count = 20;
         timer = setInterval(function () {
             count--;
             $("#time").text("Time remaining: " + count);
+            if ( count == 0 ) {
+                stopTime();
+                transition();
+                unansweredScore++;
+                $("#question").text("Sorry, time's up!");
+                $("#answerA").text(questions[questionCount].answer)
+            }
         }, 1000);
     }
 
     function gifTimer () {
+        count = 5;
         timer = setInterval(function () {
             count--;
-            console.log(count)
             if (count == 0) {
                 stopTime();
                 questionCount++;
                 newQuestion();
+                gifCount++;
+                console.log("Q: " + questionCount);
+                //console.log("Correct: " + correctScore);
+                //console.log("Wrong: " + wrongScore);
+                //console.log("Unanswered: " + unansweredScore);
             }
         }, 1000);
     }
@@ -89,10 +110,10 @@ $(document).ready(function () {
     };
 
 
-
     function newQuestion () {
         x = questionCount;
         startTimer();
+        $("#pic").attr("src", "");
         $("#question").text(questions[x].q);
         $("#answerA").text(questions[x].a);
         $("#answerB").text(questions[x].b);
@@ -102,45 +123,96 @@ $(document).ready(function () {
 
 
     function transition () {
-        $(".selections").empty();
-        $("#time").text("");
-        $("#pic").attr("src", "assets/images/lancia.gif");
-        count = 4;
-        gifTimer();
+        x = gifCount;
+        if ( gifCount < 5) {
+         $("#answerA").text("");
+         $("#answerB").text("");
+         $("#answerC").text("");
+         $("#answerD").text("");
+         $("#time").text("Time Remaining: ");
+         $("#pic").attr("src", gifs[x]);
+         gifTimer();
+        } else {
+            $("#time").text("");
+            $("#pic").attr("src", "");
+            setTimeout(function () {
+                correctScore = 0;
+                wrongScore = 0;
+                unansweredScore = 0;
+                gifCount = 0;
+                questionCount = 0;
+            }, 200)
+            $("#initializer").css("display", "initial");
+            $("#answerA").text(`Thanks for playing! Here's your total score:`);
+            $("#answerB").text(`Correct Answers: ${correctScore}`);
+            $("#answerC").text(`Incorrect Answers: ${wrongScore}`);
+            $("#answerD").text(`Unanswered: ${unansweredScore}`);
+        }
     }
 
 
-    $("#answerB").on("click", function () {
+
+    // Checking for right or wrong answers
+    $("#answerA").on("click", function () {
+        if ( questionCount === 4 || questionCount === 5 ) {
+            stopTime();
+            transition();
+            correctScore++;
+            $("#question").text("You are correct!");
+    } else {
         stopTime();
         transition();
-        correctScore++;
-        $("#question").text("You guessed right!");
+        wrongScore++;
+        $("#answerA").text(questions[questionCount].answer);
+        $("#question").text("You guessed wrong.");
+    }
+});
+
+    $("#answerB").on("click", function () {
+        if ( questionCount === 0 ) {
+            stopTime();
+            transition();
+            correctScore++;
+            $("#question").text("You are correct!");
+        } else {
+            stopTime();
+            transition();
+            wrongScore++;
+            $("#answerB").text(questions[questionCount].answer);
+            $("#question").text("You guessed wrong.");
+        }
     });
 
-    /*
-    $("#answerB").on("click", function () {
-        didUserSelect = true;
-        if ( didUserSelect ) {
-            $("#question").text("");
-            $("#answerA").text("");
-            $("#answerB").text("");
-            $("#answerC").text("");
-            $("#answerD").text("");
-            $("#919").css("src", gifs[0])
+    $("#answerC").on("click", function () {
+        if ( questionCount === 1 ) {
+            stopTime();
+            transition();
+            correctScore++;
+            $("#question").text("You are correct!");
+        } else {
+            stopTime();
+            transition();
+            wrongScore++;
+            $("#answerC").text(questions[questionCount].answer)
+            $("#question").text("You guessed wrong.");
         }
-    })
+    });
+
+    $("#answerD").on("click", function () {
+        if ( questionCount === 2 || questionCount === 3) {
+            stopTime();
+            transition();
+            correctScore++;
+            $("#question").text("You are correct!");
+        } else {
+            stopTime();
+            transition();
+            wrongScore++;
+            $("#answerD").text(questions[questionCount].answer)
+            $("#question").text("You guessed wrong.");
+        }
+    });
     
-    // Loads transition page/gif
-    if ( didUserSelect ) {
-        $("#question").text("");
-        $("#answerA").text("");
-        $("#answerB").text("");
-        $("#answerC").text("");
-        $("#answerD").text("");
-        $("#919").css("src", gifs.g1)
-    }
-    
-    */
     // Starts game
     $("#initializer").on("click", function () {
         $("#initializer").css("display", "none");
