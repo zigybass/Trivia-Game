@@ -93,6 +93,7 @@ $(document).ready(function () {
             if ( count == 0 && questionCount == 5) {
                 stopTime();
                 $("#time").text("");
+                $("#question").text("");
                 setTimeout(function () {
                 correctScore = 0;
                 wrongScore = 0;
