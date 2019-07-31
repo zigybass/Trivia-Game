@@ -1,18 +1,29 @@
 body {
-    background: rgba(7, 54, 124, 0.685);
+    background-image: url("../images/carbonfibervinyl.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 .container {
     text-align: center;
     margin-top: 100px;
-    background: rgb(53, 9, 23);
-    color: rgba(255, 255, 255, 0.925);
+    background: rgba(51, 4, 24, 0.897);
+    border-width: 4px;
+    border-style: solid;
+    border-color: rgba(10, 10, 10, 0.973);
+    color: rgb(238, 238, 238);
     border-radius: 6%;
     padding: 20px;
 }
 
 #answerA:hover, #answerB:hover, #answerC:hover, #answerD:hover {
-    background-color: rgb(194, 187, 99);
+    background-color: rgba(177, 171, 86, 0.795);
     transition: background-color .5s;
     display: inline-block;
     cursor: pointer;
+}
+
+#pic {
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(22, 22, 22, 0.952);
 }

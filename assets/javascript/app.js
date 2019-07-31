@@ -55,13 +55,10 @@ $(document).ready(function () {
     const gifs = [
         "assets/images/lancia.gif",
         "assets/images/smartdrag.gif",
-        "assets/images/water.gif",
+        "assets/images/flip.gif",
         "assets/images/jeep.gif",
         "assets/images/bean.gif",
     ]
-
-    // const jeep = $("#jeep");
-    // $("#jeep").attr("src", "assets/images/jeep.gif")
 
     //variables to store data
     let correctScore = 0;
@@ -74,7 +71,7 @@ $(document).ready(function () {
     let timer;
 
     function startTimer () {
-        count = 20;
+        count = 4;
         timer = setInterval(function () {
             count--;
             $("#time").text("Time remaining: " + count);
@@ -113,7 +110,8 @@ $(document).ready(function () {
     function newQuestion () {
         x = questionCount;
         startTimer();
-        $("#pic").attr("src", "");
+        $("#pic").attr({"src": "", "alt": ""});
+        $("#pic").css({"border-width": "0px"});
         $("#question").text(questions[x].q);
         $("#answerA").text(questions[x].a);
         $("#answerB").text(questions[x].b);
@@ -130,11 +128,12 @@ $(document).ready(function () {
          $("#answerC").text("");
          $("#answerD").text("");
          $("#time").text("Time Remaining: ");
-         $("#pic").attr("src", gifs[x]);
+         $("#pic").attr({"src": gifs[x]});
+         $("#pic").css({"border-width": "2px"});
          gifTimer();
         } else {
             $("#time").text("");
-            $("#pic").attr("src", "");
+            $("#pic").css({"border-width": "0px"});
             setTimeout(function () {
                 correctScore = 0;
                 wrongScore = 0;
@@ -216,7 +215,8 @@ $(document).ready(function () {
     // Starts game
     $("#initializer").on("click", function () {
         $("#initializer").css("display", "none");
-        $("#pic").attr({"src": "", "alt": ""});
+        //$("#pic").attr({"src": "", "alt": ""});
+        //$("#pic").css({"border-width": "0px"});
         newQuestion();
     })
 
