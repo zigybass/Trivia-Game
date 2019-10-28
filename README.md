@@ -7,7 +7,7 @@ Try it out here: https://zigybass.github.io/Trivia-game/
 
 
 ### Details
-A trivia game based on sports cars. The timer resets for every question and score is being accounted for as you progress through the game. Enjoy the silly GIFs in between the questions.
+A trivia game based on sports cars. The timer resets for every question and score is being accounted for as you progress through the game. App is centered around setTimeout() and setInterval() functions. Enjoy the silly GIFs in between the questions!
 
 ### Tools Used
 
